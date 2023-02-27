@@ -1,10 +1,21 @@
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form/dist/types';
 import { StyledTextField } from '../../../styles/form';
 import { StyledParagraph } from '../../../styles/typography';
 
-const Input = () => (
+interface IInputProps {
+  label: string;
+  register: UseFormRegisterReturn<string>;
+  type: 'text' | 'email' | 'password';
+  placeholder?: string;
+  error?: FieldError;
+}
+
+const Input = ({ label, register, error, type, placeholder }: IInputProps) => (
   <fieldset>
-    <StyledTextField label='Teste' type='text' />
-    <StyledParagraph fontColor='red'>Erro</StyledParagraph>
+    <StyledTextField label={label} {...register} type={type} />
+    {error ? (
+      <StyledParagraph fontColor='red'>{error.message}</StyledParagraph>
+    ) : null}
   </fieldset>
 );
 
