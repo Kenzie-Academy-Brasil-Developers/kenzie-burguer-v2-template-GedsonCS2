@@ -1,9 +1,9 @@
+import { useContext, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import CartProductList from './CartProductList';
 
 import { StyledCartModalBox } from './style';
 import { StyledParagraph, StyledTitle } from '../../styles/typography';
-import { useContext, useState } from 'react';
 import { UserContext } from '../../providers/UserContext';
 
 const CartModal = () => {

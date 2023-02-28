@@ -12,5 +12,5 @@ export const ProtectedRoutes = () => {
     }
   });
 
-  return <>{user ? <Outlet /> : null}</>;
+  return user ? <Outlet /> : null;
 };

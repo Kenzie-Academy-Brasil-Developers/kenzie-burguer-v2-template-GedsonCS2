@@ -1,11 +1,11 @@
 import { MdShoppingCart, MdLogout } from 'react-icons/md';
-
-import SearchForm from './SearchForm';
+import { useContext } from 'react';
 import { StyledHeader } from './style';
+import SearchForm from './SearchForm';
 import LogoKenzieBurguer from '../../assets/LogoKenzieBurguer.svg';
 
 import { StyledContainer } from '../../styles/grid';
-import { useContext } from 'react';
+
 import { UserContext } from '../../providers/UserContext';
 
 const Header = () => {

@@ -1,8 +1,9 @@
+import { useContext } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import Input from '../Input';
 import { StyledButton } from '../../../styles/button';
 import { StyledForm } from '../../../styles/form';
-import { useForm } from 'react-hook-form';
-import { useContext } from 'react';
+
 import {
   IRegisterFormValues,
   UserContext,
@@ -47,7 +48,7 @@ const RegisterForm = () => {
       <Input
         label='Confirme a senha'
         type='text'
-        register={register('confirmPassword')}
+        register={register('password')}
         error={errors.password}
       />
       <StyledButton type='submit' $buttonSize='default' $buttonStyle='gray'>

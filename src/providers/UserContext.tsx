@@ -54,13 +54,13 @@ export const UserProvider = ({ children }: IDefautProviderProps) => {
               Authorization: `Bearer ${userLogadoToken}`,
             },
           });
-          api.defaults.headers.common.authorization = `Bearer ${userLogadoToken}`;
           setUser(response.data);
           navigate('/shop');
         };
         userLoad();
       } catch (error) {
         console.log(error);
+        console.log('não logou');
       }
     }
   }, []);

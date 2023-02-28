@@ -1,11 +1,11 @@
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form/dist/types';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { StyledTextField } from '../../../styles/form';
 import { StyledParagraph } from '../../../styles/typography';
 
 interface IInputProps {
   label: string;
   register: UseFormRegisterReturn<string>;
-  type: 'text' | 'email' | 'password';
+  type: 'text' | 'email' | 'password' | 'confirmPassword';
   placeholder?: string;
   error?: FieldError;
 }
