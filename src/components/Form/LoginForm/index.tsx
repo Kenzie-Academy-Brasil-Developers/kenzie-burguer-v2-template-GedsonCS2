@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loguinFormSchema } from './LoginFormSchema';
 import {
   IRegisterFormValues,
   UserContext,
@@ -13,7 +15,7 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegisterFormValues>();
+  } = useForm<IRegisterFormValues>({ resolver: yupResolver(loguinFormSchema) });
 
   const { userLogin } = useContext(UserContext);
 
@@ -21,11 +23,10 @@ const LoginForm = () => {
     formData: IRegisterFormValues
   ) => {
     userLogin(formData);
-    console.log(formData);
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit(submitLogin)}>
+    <StyledForm onSubmit={handleSubmit(submitLogin)} noValidate>
       <Input
         label='Email'
         type='email'

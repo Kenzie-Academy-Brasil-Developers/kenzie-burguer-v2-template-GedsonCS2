@@ -5,12 +5,12 @@ import { StyledParagraph } from '../../../styles/typography';
 interface IInputProps {
   label: string;
   register: UseFormRegisterReturn<string>;
-  type: 'text' | 'email' | 'password' | 'confirmPassword';
+  type: 'text' | 'email' | 'password';
   placeholder?: string;
   error?: FieldError;
 }
 
-const Input = ({ label, register, error, type, placeholder }: IInputProps) => (
+const Input = ({ label, register, error, type }: IInputProps) => (
   <fieldset>
     <StyledTextField label={label} {...register} type={type} />
     {error ? (

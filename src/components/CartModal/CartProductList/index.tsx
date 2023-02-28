@@ -1,25 +1,40 @@
+import { useContext } from 'react';
 import CartProductCard from './CartProductCard';
 
 import { StyledCartProductList } from './style';
 import { StyledButton } from '../../../styles/button';
 import { StyledParagraph } from '../../../styles/typography';
 
-const CartProductList = () => (
-  <StyledCartProductList>
-    <ul>
-      <CartProductCard />
-    </ul>
+import { CartContext } from '../../../providers/CartContext';
 
-    <div className='totalBox'>
-      <StyledParagraph>
-        <strong>Total</strong>
-      </StyledParagraph>
-      <StyledParagraph className='total'>R$ 14,00</StyledParagraph>
-    </div>
-    <StyledButton $buttonSize='default' $buttonStyle='gray'>
-      Remover todos
-    </StyledButton>
-  </StyledCartProductList>
-);
+const CartProductList = () => {
+  const { productsCart, setproductsCart, ValueCardTotal } =
+    useContext(CartContext);
+  return (
+    <StyledCartProductList>
+      <ul>
+        {productsCart.map((product) => (
+          <CartProductCard key={product.id} product={product} />
+        ))}
+      </ul>
+
+      <div className='totalBox'>
+        <StyledParagraph>
+          <strong>Total</strong>
+        </StyledParagraph>
+        <StyledParagraph className='total'>
+          R$ {ValueCardTotal.toFixed(2)}
+        </StyledParagraph>
+      </div>
+      <StyledButton
+        $buttonSize='default'
+        $buttonStyle='gray'
+        onClick={() => setproductsCart([])}
+      >
+        Remover todos
+      </StyledButton>
+    </StyledCartProductList>
+  );
+};
 
 export default CartProductList;

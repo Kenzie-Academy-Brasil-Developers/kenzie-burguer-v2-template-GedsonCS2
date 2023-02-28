@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { Await, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 
 export interface IDefautProviderProps {
@@ -16,6 +16,7 @@ export interface IRegisterFormValues {
   name: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 export interface IloginFormValues {

@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { registerFormSchema } from './RegisterFormSchema';
 import Input from '../Input';
 import { StyledButton } from '../../../styles/button';
 import { StyledForm } from '../../../styles/form';
@@ -14,7 +16,9 @@ const RegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegisterFormValues>();
+  } = useForm<IRegisterFormValues>({
+    resolver: yupResolver(registerFormSchema),
+  });
 
   const { userRegister } = useContext(UserContext);
 
@@ -22,11 +26,10 @@ const RegisterForm = () => {
     formData: IRegisterFormValues
   ) => {
     userRegister(formData);
-    console.log(formData);
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit(submitRegister)}>
+    <StyledForm onSubmit={handleSubmit(submitRegister)} noValidate>
       <Input
         label='Nome'
         type='text'
@@ -47,9 +50,9 @@ const RegisterForm = () => {
       />
       <Input
         label='Confirme a senha'
-        type='text'
-        register={register('password')}
-        error={errors.password}
+        type='password'
+        register={register('confirmPassword')}
+        error={errors.confirmPassword}
       />
       <StyledButton type='submit' $buttonSize='default' $buttonStyle='gray'>
         Cadastrar
