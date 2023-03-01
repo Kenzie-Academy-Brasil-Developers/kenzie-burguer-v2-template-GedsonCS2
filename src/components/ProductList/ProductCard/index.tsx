@@ -3,9 +3,13 @@ import { StyledProductCard } from './style';
 import { StyledButton } from '../../../styles/button';
 import { StyledParagraph, StyledTitle } from '../../../styles/typography';
 
-import { CartContext } from '../../../providers/CartContext';
+import { CartContext, IProduct } from '../../../providers/CartContext';
 
-const ProductCard = ({ product }) => {
+interface IProduct2 {
+  product: IProduct;
+}
+
+const ProductCard = ({ product }: IProduct2) => {
   const { addProductToCart } = useContext(CartContext);
 
   return (
