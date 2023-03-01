@@ -16,6 +16,7 @@ export interface IProduct {
 export interface ICartContext {
   addProductToCart: (product: any) => void;
   removeProductFromCart: (productId: any) => void;
+  productsList: never[];
 }
 
 export const CartContext = createContext({});
@@ -49,33 +50,36 @@ export const CartProvider = ({ children }: ICardProviderProps) => {
     localStorage.setItem('@Cart', JSON.stringify(productsCart));
   }, [productsCart]);
 
-  const addProductToCart = (product) => {
-    const index = productsCart.findIndex((val) => val.id === product.id);
+  const addProductToCart = (product: IProduct) => {
+    const index = productsCart.findIndex((val: any) => val.id === product.id);
 
     if (index < 0) {
       setproductsCart([...productsCart, product]);
-      console.log(productsCart);
+
       console.log('Produto adicionado com sucesso');
     } else {
-      console.log(productsCart);
       console.log('Produto já está no carrinho');
     }
   };
 
-  const removeProductFromCart = (productId) => {
+  const removeProductFromCart = (productId: number) => {
+    console.log(productId);
     const newProductCart = productsCart.filter(
-      (product) => product.id !== productId
+      (product: IProduct) => product.id !== productId
     );
     setproductsCart(newProductCart);
   };
 
   const ValueCart = () => {
-    const arrayValue = productsCart.map((Value) => {
+    const arrayValue = productsCart.map((Value: IProduct) => {
       return Value.price;
     });
 
-    const result = arrayValue.reduce((result, namber) => result + namber, 0);
-    return result;
+    const resultTotal = arrayValue.reduce(
+      (result: any, number: number) => result + number,
+      0
+    );
+    return resultTotal;
   };
 
   const ValueCardTotal = ValueCart();

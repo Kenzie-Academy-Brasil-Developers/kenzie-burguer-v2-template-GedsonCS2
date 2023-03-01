@@ -5,7 +5,7 @@ import { StyledCartProductList } from './style';
 import { StyledButton } from '../../../styles/button';
 import { StyledParagraph } from '../../../styles/typography';
 
-import { CartContext } from '../../../providers/CartContext';
+import { CartContext, IProduct } from '../../../providers/CartContext';
 
 const CartProductList = () => {
   const { productsCart, setproductsCart, ValueCardTotal } =
@@ -13,7 +13,7 @@ const CartProductList = () => {
   return (
     <StyledCartProductList>
       <ul>
-        {productsCart.map((product) => (
+        {productsCart.map((product: IProduct) => (
           <CartProductCard key={product.id} product={product} />
         ))}
       </ul>
