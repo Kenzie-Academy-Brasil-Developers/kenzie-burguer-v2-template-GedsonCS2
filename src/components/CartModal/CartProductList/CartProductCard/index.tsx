@@ -4,9 +4,13 @@ import { MdDelete } from 'react-icons/md';
 import { StyledCartProductCard } from './style';
 import { StyledTitle } from '../../../../styles/typography';
 
-import { CartContext } from '../../../../providers/CartContext';
+import { CartContext, IProduct } from '../../../../providers/CartContext';
 
-const CartProductCard = ({ product }) => {
+interface IProduct3 {
+  product: IProduct;
+}
+
+const CartProductCard = ({ product }: IProduct3) => {
   const { removeProductFromCart } = useContext(CartContext);
   return (
     <StyledCartProductCard>

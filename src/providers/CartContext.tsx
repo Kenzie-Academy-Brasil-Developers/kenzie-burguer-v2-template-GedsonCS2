@@ -16,16 +16,19 @@ export interface IProduct {
 export interface ICartContext {
   addProductToCart: (product: any) => void;
   removeProductFromCart: (productId: any) => void;
-  productsList: never[];
+  productsList: IProduct[];
+  productsCart: IProduct[];
+  setproductsCart: React.Dispatch<React.SetStateAction<IProduct[]>>;
+  ValueCardTotal: number;
 }
 
-export const CartContext = createContext({});
+export const CartContext = createContext({} as ICartContext);
 
 export const CartProvider = ({ children }: ICardProviderProps) => {
   const localProductscart = localStorage.getItem('@Cart');
 
-  const [productsList, setproductsList] = useState([]);
-  const [productsCart, setproductsCart] = useState(
+  const [productsList, setproductsList] = useState<IProduct[]>([]);
+  const [productsCart, setproductsCart] = useState<IProduct[]>(
     localProductscart ? JSON.parse(localProductscart) : []
   );
   useEffect(() => {
@@ -72,7 +75,8 @@ export const CartProvider = ({ children }: ICardProviderProps) => {
 
   const ValueCart = () => {
     const arrayValue = productsCart.map((Value: IProduct) => {
-      return Value.price;
+      const ProductValue = Value.price;
+      return ProductValue;
     });
 
     const resultTotal = arrayValue.reduce(
