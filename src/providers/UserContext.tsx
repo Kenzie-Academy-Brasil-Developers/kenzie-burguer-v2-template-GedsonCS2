@@ -1,6 +1,9 @@
 import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import { api } from '../services/api';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export interface IDefautProviderProps {
   children: React.ReactNode;
@@ -60,8 +63,7 @@ export const UserProvider = ({ children }: IDefautProviderProps) => {
         };
         userLoad();
       } catch (error) {
-        console.log(error);
-        console.log('não logou');
+        toast.error(`${error}`);
       }
     }
   }, []);
@@ -71,9 +73,9 @@ export const UserProvider = ({ children }: IDefautProviderProps) => {
       const response = await api.post('/users', formData);
       setUser(response.data.user);
       navigate('/');
-      console.log('cadastrou');
+      toast.success('Cadastro efetuado com Sucesso');
     } catch (error) {
-      console.log('não cadastrou');
+      toast.error('Erro ao Realizar o cadastro');
     }
   };
 
@@ -83,11 +85,10 @@ export const UserProvider = ({ children }: IDefautProviderProps) => {
       setUser(response.data.user);
       localStorage.setItem('@TOKEN', response.data.accessToken);
       localStorage.setItem('@USERID', response.data.user.id);
-
-      console.log(response.data.user);
       navigate('/shop');
+      toast.success('login efetuado com Sucesso');
     } catch (error) {
-      console.log(error);
+      toast.error(`${error}`);
     }
   };
 
@@ -99,20 +100,34 @@ export const UserProvider = ({ children }: IDefautProviderProps) => {
   };
 
   return (
-    <UserContext.Provider
-      value={{
-        userLogout,
-        loading,
-        setLoading,
-        user,
-        setUser,
-        userLogin,
-        userRegister,
-        setOpenmodal,
-        opemModal,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+    <>
+      <UserContext.Provider
+        value={{
+          userLogout,
+          loading,
+          setLoading,
+          user,
+          setUser,
+          userLogin,
+          userRegister,
+          setOpenmodal,
+          opemModal,
+        }}
+      >
+        {children}
+      </UserContext.Provider>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
+    </>
   );
 };

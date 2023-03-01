@@ -1,4 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../services/api';
 
 export interface ICardProviderProps {
@@ -14,8 +16,8 @@ export interface IProduct {
 }
 
 export interface ICartContext {
-  addProductToCart: (product: any) => void;
-  removeProductFromCart: (productId: any) => void;
+  addProductToCart: (product: IProduct) => void;
+  removeProductFromCart: (productId: number) => void;
   productsList: IProduct[];
   productsCart: IProduct[];
   setproductsCart: React.Dispatch<React.SetStateAction<IProduct[]>>;
@@ -43,7 +45,7 @@ export const CartProvider = ({ children }: ICardProviderProps) => {
 
         setproductsList(response.data);
       } catch (error) {
-        console.log(error);
+        toast.error(`${error}`);
       }
     };
     LoadProductsdata();
@@ -54,23 +56,22 @@ export const CartProvider = ({ children }: ICardProviderProps) => {
   }, [productsCart]);
 
   const addProductToCart = (product: IProduct) => {
-    const index = productsCart.findIndex((val: any) => val.id === product.id);
+    const index = productsCart.findIndex((val) => val.id === product.id);
 
     if (index < 0) {
       setproductsCart([...productsCart, product]);
-
-      console.log('Produto adicionado com sucesso');
+      toast.success('Item adicionado ao Carrinho com sucesso');
     } else {
-      console.log('Produto já está no carrinho');
+      toast.warning(`Item já está no Carrinho`);
     }
   };
 
   const removeProductFromCart = (productId: number) => {
-    console.log(productId);
     const newProductCart = productsCart.filter(
       (product: IProduct) => product.id !== productId
     );
     setproductsCart(newProductCart);
+    toast.success('Item Removido do Carrinho com sucesso');
   };
 
   const ValueCart = () => {
@@ -80,7 +81,7 @@ export const CartProvider = ({ children }: ICardProviderProps) => {
     });
 
     const resultTotal = arrayValue.reduce(
-      (result: any, number: number) => result + number,
+      (result, number) => result + number,
       0
     );
     return resultTotal;
@@ -89,17 +90,31 @@ export const CartProvider = ({ children }: ICardProviderProps) => {
   const ValueCardTotal = ValueCart();
 
   return (
-    <CartContext.Provider
-      value={{
-        productsList,
-        addProductToCart,
-        productsCart,
-        setproductsCart,
-        removeProductFromCart,
-        ValueCardTotal,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+    <>
+      <CartContext.Provider
+        value={{
+          productsList,
+          addProductToCart,
+          productsCart,
+          setproductsCart,
+          removeProductFromCart,
+          ValueCardTotal,
+        }}
+      >
+        {children}
+      </CartContext.Provider>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
+    </>
   );
 };
