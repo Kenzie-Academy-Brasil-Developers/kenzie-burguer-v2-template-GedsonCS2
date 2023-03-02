@@ -64,6 +64,9 @@ export const UserProvider = ({ children }: IDefautProviderProps) => {
         userLoad();
       } catch (error) {
         toast.error(`${error}`);
+        setUser(null);
+        localStorage.removeItem('@TOKEN');
+        localStorage.removeItem('@USERID');
       }
     }
   }, []);
